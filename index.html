@@ -25,9 +25,36 @@ const $ = id => document.getElementById(id);
 $('copyright-year').textContent = new Date().getFullYear();
 const pdfUrl = path => `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${String(path).split('/').map(encodeURIComponent).join('/')}`;
 const label = issue => `${issue.issue_week}/52 ${issue.issue_year}`;
+// PDF.js renders page one of each PDF into a canvas.
+const pdfjsReady = import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs').then(pdfjs => {
+  pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
+  return pdfjs;
+});
+async function renderCover(container, path) {
+  try {
+    const pdfjs = await pdfjsReady;
+    const task = pdfjs.getDocument({url: pdfUrl(path)});
+    const pdf = await task.promise;
+    try {
+      const page = await pdf.getPage(1);
+      const initial = page.getViewport({scale: 1});
+      const viewport = page.getViewport({scale: Math.min(2, 900 / initial.width)});
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = Math.ceil(viewport.width);
+      canvas.height = Math.ceil(viewport.height);
+      await page.render({canvasContext: context, viewport}).promise;
+      canvas.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover';
+      if (container.isConnected) container.replaceChildren(canvas);
+    } finally { await pdf.destroy(); }
+  } catch (error) {
+    console.error('Could not render PDF cover:', path, error);
+    container.setAttribute('title', 'Cover preview unavailable; click to read the PDF');
+  }
+}
 function coverLink(issue){
   const a=document.createElement('a');a.className='issue-link';a.href=pdfUrl(issue.pdf_path);a.target='_blank';a.rel='noopener noreferrer';a.setAttribute('aria-label',`Read issue ${label(issue)}`);
-  const cover=document.createElement('div');cover.className='cover';a.append(cover);
+  const cover=document.createElement('div');cover.className='cover';a.append(cover);renderCover(cover,issue.pdf_path);
   const caption=document.createElement('span');caption.className='issue-label';caption.textContent=label(issue);a.append(caption);return a;
 }
 function renderArchive(issues){
@@ -47,6 +74,7 @@ async function loadMagazines(){
   const [current,...older]=issues;
   $('current-title').textContent=label(current);
   $('current-cover-link').href=pdfUrl(current.pdf_path);
+   renderCover($('current-cover-link'), current.pdf_path);
   $('current-read').href=pdfUrl(current.pdf_path);
   $('current-content').classList.remove('hidden');
   const years=[...new Set(older.map(i=>i.issue_year))];
