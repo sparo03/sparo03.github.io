@@ -5,35 +5,85 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dionysus Magazine</title>
 <style>
-:root{--ink:#14243A;--muted:#647184;--paper:#fff;--cover:#e5e5e5}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}button,select{font:inherit}a{color:inherit}.shell{max-width:1380px;margin:auto;padding:26px clamp(20px,5vw,75px) 90px}.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:15px;border-bottom:1px solid #dbe0e5;padding-bottom:24px}.brand{text-decoration:none;grid-column:2;text-align:center}.masthead{font-family:Georgia,'Times New Roman',serif;font-size:clamp(39px,5.5vw,73.728px);letter-spacing:-.068em;line-height:.9;font-weight:normal}.brand small{display:block;font-family:Georgia,serif;font-size:15px;letter-spacing:.18em;margin-top:11px}.subscribe{grid-column:3;justify-self:end;background:var(--ink);color:white;border:1px solid var(--ink);padding:12px 19px;text-decoration:none;font-size:12px;letter-spacing:.09em;text-transform:uppercase}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:bold}.current{padding:65px 0 80px;border-bottom:1px solid #dbe0e5}.current-grid{display:grid;grid-template-columns:minmax(240px, .95fr) 1fr;gap:clamp(32px,7vw,110px);align-items:center}.cover{display:block;aspect-ratio:210/297;background:var(--cover);width:100%;border:0;overflow:hidden;position:relative}.cover img{width:100%;height:100%;object-fit:cover;display:block}.current .cover{max-width:470px}.issue-heading{font-family:Georgia,serif;font-size:clamp(40px,5.8vw,88px);font-weight:normal;letter-spacing:-.055em;line-height:1;margin:20px 0 28px}.description{font-family:Georgia,serif;font-size:clamp(17px,1.65vw,23px);line-height:1.55;max-width:500px;color:#46556a}.read{display:inline-block;margin-top:26px;padding:15px 25px;background:var(--ink);color:white;text-decoration:none;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.archive{padding-top:65px}.archive-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:34px}.archive h2{font-family:Georgia,serif;font-size:clamp(32px,4vw,54px);font-weight:normal;letter-spacing:-.05em;margin:0}.archive label{font-size:12px;letter-spacing:.1em;text-transform:uppercase}.archive select{margin-left:10px;padding:9px 26px 9px 12px;background:white;border:1px solid #b9c1ca;color:var(--ink)}.archive-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:42px 22px}.issue-link{text-decoration:none;display:block}.issue-link:hover .cover{outline:2px solid var(--ink);outline-offset:3px}.issue-label{display:block;font-family:Georgia,serif;font-size:clamp(16px,1.7vw,24px);margin-top:13px}.state{padding:32px 0;color:var(--muted)}.error{color:#9b2633}.hidden{display:none!important}footer{border-top:1px solid #dbe0e5;margin-top:80px;padding-top:20px;color:var(--muted);font-size:12px}@media(max-width:700px){.shell{padding-top:22px}.top{grid-template-columns:1fr auto;align-items:center}.brand{grid-column:1;text-align:left}.masthead{font-size:clamp(37px,8vw,60px)}.brand small{text-align:left}.subscribe{grid-column:2;padding:10px}.current{padding:45px 0 60px}.current-grid{grid-template-columns:1fr;gap:28px}.current .cover{max-width:360px}.issue-heading{margin:15px 0}.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px}.archive{padding-top:42px}}@media(max-width:370px){.masthead{font-size:32px}.subscribe{font-size:10px}}
+:root{--ink:#14243A;--muted:#647184;--paper:#fff;--cover:#e5e5e5}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}button,select{font:inherit}a{color:inherit}.shell{max-width:1380px;margin:auto;padding:26px clamp(20px,5vw,75px) 90px}.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:15px;border-bottom:1px solid #dbe0e5;padding-bottom:24px}.brand{text-decoration:none;grid-column:2;text-align:center}.masthead{font-family:Georgia,'Times New Roman',serif;font-size:clamp(39px,5.5vw,73.728px);letter-spacing:-.068em;line-height:.9;font-weight:normal}.brand small{display:block;font-family:Georgia,serif;font-size:15px;letter-spacing:.18em;margin-top:11px}.account-actions{grid-column:3;justify-self:end;display:flex;gap:9px;align-items:center}.subscribe{background:var(--ink);color:white;border:1px solid var(--ink);padding:12px 19px;text-decoration:none;font-size:12px;letter-spacing:.09em;text-transform:uppercase}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:bold}.current{padding:65px 0 80px;border-bottom:1px solid #dbe0e5}.current-grid{display:grid;grid-template-columns:minmax(240px, .95fr) 1fr;gap:clamp(32px,7vw,110px);align-items:center}.cover{display:block;aspect-ratio:210/297;background:var(--cover);width:100%;border:0;overflow:hidden;position:relative}.cover img{width:100%;height:100%;object-fit:cover;display:block}.current .cover{max-width:470px}.issue-heading{font-family:Georgia,serif;font-size:clamp(40px,5.8vw,88px);font-weight:normal;letter-spacing:-.055em;line-height:1;margin:20px 0 28px}.description{font-family:Georgia,serif;font-size:clamp(17px,1.65vw,23px);line-height:1.55;max-width:500px;color:#46556a}.read{display:inline-block;margin-top:26px;padding:15px 25px;background:var(--ink);color:white;text-decoration:none;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.archive{padding-top:65px}.archive-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:34px}.archive h2{font-family:Georgia,serif;font-size:clamp(32px,4vw,54px);font-weight:normal;letter-spacing:-.05em;margin:0}.archive label{font-size:12px;letter-spacing:.1em;text-transform:uppercase}.archive select{margin-left:10px;padding:9px 26px 9px 12px;background:white;border:1px solid #b9c1ca;color:var(--ink)}.archive-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:42px 22px}.issue-link{text-decoration:none;display:block}.issue-link:hover .cover{outline:2px solid var(--ink);outline-offset:3px}.issue-label{display:block;font-family:Georgia,serif;font-size:clamp(16px,1.7vw,24px);margin-top:13px}.state{padding:32px 0;color:var(--muted)}.error{color:#9b2633}.hidden{display:none!important}footer{border-top:1px solid #dbe0e5;margin-top:80px;padding-top:20px;color:var(--muted);font-size:12px}@media(max-width:700px){.shell{padding-top:22px}.top{grid-template-columns:1fr auto;align-items:center}.brand{grid-column:1;text-align:left}.masthead{font-size:clamp(37px,8vw,60px)}.brand small{text-align:left}.account-actions{grid-column:2}.subscribe{padding:10px}.current{padding:45px 0 60px}.current-grid{grid-template-columns:1fr;gap:28px}.current .cover{max-width:360px}.issue-heading{margin:15px 0}.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px}.archive{padding-top:42px}}@media(max-width:370px){.masthead{font-size:32px}.subscribe{font-size:10px}.account-actions{gap:5px}}
 .cover-unavailable{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;font-size:13px;color:#647184}
 </style>
 </head>
 <body>
 <div class="shell">
-<header class="top"><a class="brand" href="./" aria-label="Dionysus Magazine home"><div class="masthead">DIONYSUS</div><small>Magazine</small></a><a class="subscribe" href="mailto:hello@example.com?subject=Dionysus%20Magazine%20subscription">Subscribe</a></header>
+<header class="top"><a class="brand" href="./" aria-label="Dionysus Magazine home"><div class="masthead">DIONYSUS</div><small>Magazine</small></a><div class="account-actions"><a class="subscribe" id="account-link" href="./Subscribe.html">Subscribe</a><a class="subscribe" id="login-link" href="./Subscribe.html#login">Log in</a></div></header>
 <main>
 <section class="current" aria-labelledby="current-title"><div class="eyebrow">Current issue</div><div id="loading" class="state">Loading magazines…</div><div id="current-content" class="current-grid hidden"><a id="current-cover-link" class="cover" target="_blank" rel="noopener noreferrer" aria-label="Read current issue"></a><div><h1 class="issue-heading" id="current-title"></h1><p class="description">One issue every week. Fifty-two editions a year. A growing archive of magazines, each featuring its own collection of stories, visuals, and ideas.</p><a class="read" id="current-read" target="_blank" rel="noopener noreferrer">Read the magazine ↗</a></div></div><p id="error" class="state error hidden"></p><p id="empty" class="state hidden">No published magazines yet. Upload a PDF in Supabase Storage, then add a published row in the magazines table.</p></section>
 <section class="archive" aria-labelledby="archive-title"><div class="archive-head"><h2 id="archive-title">Archive</h2><label for="year-filter">Year <select id="year-filter"><option value="all">All years</option></select></label></div><div id="archive-grid" class="archive-grid"></div><p id="archive-empty" class="state hidden">No earlier issues for this year.</p></section>
 </main><footer>© <span id="copyright-year"></span> DIONYSUS Magazine</footer>
 </div>
-<script>
+<script type="module">
 // The Supabase publishable key is public by design. Never put a service-role or secret key here.
+import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
 const SUPABASE_URL = 'https://imwqgvigesticlhsakfx.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_GEjJpD7saLKkIDj7LmeCiQ_CbvduMlo';
 const BUCKET = 'magazine-pdfs';
 const COVER_BUCKET = 'magazine-covers';
 const $ = id => document.getElementById(id);
+const authDb=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+let canRead=false;
+let displayedIssues=[];
+function issueHref(issue){return canRead?'#read-magazine':subscribeUrl(issue)}
+function refreshIssueLinks(){
+ for(const a of document.querySelectorAll('[data-pdf-path]')){
+  const path=a.dataset.pdfPath;
+  a.href=canRead?'#read-magazine':'./Subscribe.html';
+  a.removeAttribute('target');a.removeAttribute('rel');
+ }
+}
+async function updateAccess(session){
+ canRead=false;
+ if(session?.user){
+  const {data,error}=await authDb.from('magazine_subscribers').select('subscription_status').eq('user_id',session.user.id).maybeSingle();
+  if(error)console.error('Unable to verify subscription:',error);
+  canRead=data?.subscription_status==='active';
+ }
+ refreshIssueLinks();
+}
+function showAccount(session){
+ const link=$('account-link');if(!link)return;
+ link.textContent=session?.user?.email||'Subscribe';
+ link.href=session?.user?'./profile.html':'./Subscribe.html';
+ link.title=session?.user?'Open your profile':'Subscribe';
+ document.getElementById('login-link').classList.toggle('hidden',!!session?.user);
+}
+authDb.auth.getSession().then(async ({data})=>{showAccount(data.session);await updateAccess(data.session)}).catch(console.error);
+authDb.auth.onAuthStateChange((_event,session)=>{showAccount(session);setTimeout(()=>updateAccess(session),0)});
+
 $('copyright-year').textContent = new Date().getFullYear();
-const pdfUrl = path => `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${String(path).split('/').map(encodeURIComponent).join('/')}`;
+// PDF bucket is PRIVATE. Download requires Supabase Storage RLS authorization.
+async function openProtectedPdf(path){
+ const {data:{session}}=await authDb.auth.getSession();
+ if(!session){location.href='./Subscribe.html';return}
+ const {data:subscription,error:statusError}=await authDb.from('magazine_subscribers').select('subscription_status').eq('user_id',session.user.id).maybeSingle();
+ if(statusError||subscription?.subscription_status!=='active'){location.href='./Subscribe.html';return}
+ const {data,error}=await authDb.storage.from(BUCKET).download(path);
+ if(error){alert('Unable to open this magazine: '+error.message);return}
+ const url=URL.createObjectURL(new Blob([data],{type:'application/pdf'}));
+ const viewer=window.open(url,'_blank');
+ if(!viewer){const link=document.createElement('a');link.href=url;link.download=path.split('/').pop()||'magazine.pdf';document.body.append(link);link.click();link.remove()}
+ setTimeout(()=>URL.revokeObjectURL(url),300000);
+}
+document.addEventListener('click',e=>{
+ const link=e.target.closest('a[data-pdf-path]');if(!link)return;
+ e.preventDefault();
+ if(!canRead){location.href='./Subscribe.html';return}
+ openProtectedPdf(link.dataset.pdfPath).catch(err=>alert('Unable to open magazine: '+err.message));
+});
 const label = issue => `${issue.issue_week}/52 ${issue.issue_year}`;
+const subscribeUrl = issue => `./Subscribe.html?issue=${encodeURIComponent(label(issue))}`;
 // PNG cover stored alongside each PDF by Dionysus Admin.
 const coverUrl = path => `${SUPABASE_URL}/storage/v1/object/public/${COVER_BUCKET}/${String(path.replace(/\.pdf$/i,'.png')).split('/').map(encodeURIComponent).join('/')}`;
 function renderCover(container,path,eager=false){
  const img=document.createElement('img');img.src=coverUrl(path);img.alt='Magazine cover';img.loading=eager?'eager':'lazy';img.decoding='async';if(eager)img.fetchPriority='high';img.onerror=()=>{console.error('Cover image failed:',img.src);container.title='PNG missing or inaccessible in magazine-covers: '+path.replace(/\.pdf$/i,'.png');img.remove();const note=document.createElement('span');note.className='cover-unavailable';note.textContent='Cover unavailable';container.append(note)};container.replaceChildren(img);
 }
 function coverLink(issue){
-  const a=document.createElement('a');a.className='issue-link';a.href=pdfUrl(issue.pdf_path);a.target='_blank';a.rel='noopener noreferrer';a.setAttribute('aria-label',`Read issue ${label(issue)}`);
+  const a=document.createElement('a');a.className='issue-link';a.href=issueHref(issue);a.dataset.pdfPath=issue.pdf_path;a.removeAttribute('target');a.removeAttribute('rel');a.setAttribute('aria-label',`Read issue ${label(issue)}`);
   const cover=document.createElement('div');cover.className='cover';a.append(cover);renderCover(cover,issue.pdf_path);
   const caption=document.createElement('span');caption.className='issue-label';caption.textContent=label(issue);a.append(caption);return a;
 }
@@ -53,14 +103,15 @@ async function loadMagazines(){
   if(!issues.length){$('empty').classList.remove('hidden');$('archive-empty').classList.remove('hidden');return}
   const [current,...older]=issues;
   $('current-title').textContent=label(current);
-  $('current-cover-link').href=pdfUrl(current.pdf_path);
+  $('current-cover-link').href=issueHref(current);$('current-cover-link').dataset.pdfPath=current.pdf_path;
    renderCover($('current-cover-link'), current.pdf_path, true);
-  $('current-read').href=pdfUrl(current.pdf_path);
+  $('current-read').href=issueHref(current);$('current-read').dataset.pdfPath=current.pdf_path;
   $('current-content').classList.remove('hidden');
   const years=[...new Set(older.map(i=>i.issue_year))];
   for(const year of years){const option=document.createElement('option');option.value=String(year);option.textContent=String(year);$('year-filter').append(option)}
   $('year-filter').addEventListener('change',()=>renderArchive(older));
   renderArchive(older);
+  refreshIssueLinks();
  }catch(err){$('loading').classList.add('hidden');$('error').textContent=`Unable to load magazines. ${err.message}`;$('error').classList.remove('hidden');console.error(err)}
 }
 loadMagazines();
