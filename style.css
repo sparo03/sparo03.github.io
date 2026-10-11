@@ -270,3 +270,98 @@ body.page-subscribe footer {
 /* Align back navigation with centered 720px content panels. */
 body.page-profile .nav-back,
 body.page-subscribe .nav-back {max-width:720px;width:100%;margin:0 auto;padding-top:20px;}
+
+/* Outlined navigation buttons below the account forms. */
+body.page-subscribe .auth-switch{display:block;width:100%;margin-top:17px;text-align:center;background:#fff;color:var(--ink);border:1px solid var(--ink);text-decoration:none;padding:15px 23px;font:12px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;min-height:48px;box-sizing:border-box}
+body.page-subscribe .auth-switch:hover{background:#f7f8fa}
+
+/* Account form box heading spacing. */
+body.page-subscribe .form-panel h2 { margin: 0 0 17px; }
+
+/* Compact, always-visible site header. */
+body.page-index, body.page-profile, body.page-subscribe { --header-height: 76px; }
+body .top.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--header-height);
+  padding: 10px clamp(20px, 5vw, 75px);
+  background: #fff;
+  border: 0;
+}
+body.page-index .shell, body.page-profile .shell, body.page-subscribe .shell { padding-top: calc(var(--header-height) + 16px); }
+body .site-header .masthead { font-size: clamp(26px, 3vw, 39px); letter-spacing: -.06em; }
+body .site-header .brand small { font-size: 10px; letter-spacing: .16em; margin-top: 5px; }
+body .site-header .account-actions { min-width: 0; }
+body .site-header .account-actions .subscribe { max-width: min(38vw, 260px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; padding: 10px 12px; }
+@media (max-width: 700px) {
+  body.page-index, body.page-profile, body.page-subscribe { --header-height: 66px; }
+  body .top.site-header { padding: 8px 16px; gap: 8px; }
+  body .site-header .masthead { font-size: clamp(23px, 5.8vw, 32px); }
+  body .site-header .brand small { font-size: 9px; }
+  body .site-header .account-actions .subscribe { max-width: 35vw; font-size: 10px; padding: 9px 8px; }
+}
+
+/* Outline the signed-in Profile navigation button only. */
+body.page-index .site-header .account-actions .subscribe.profile-outline { background: #fff; color: var(--ink); border: 1px solid var(--ink); }
+
+
+/* Responsive layout improvements — all pages */
+html { -webkit-text-size-adjust: 100%; }
+body.page-index, body.page-profile, body.page-subscribe { min-width: 0; overflow-x: clip; }
+body.page-index .shell, body.page-profile .shell, body.page-subscribe .shell { width: 100%; min-width: 0; }
+body .site-header .brand, body .site-header .account-actions { min-width: 0; }
+body .site-header .account-actions .subscribe { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.page-index .current-grid > *, body.page-index .archive-grid > *, body.page-profile .layout > *, body.page-subscribe .layout > * { min-width: 0; }
+body.page-index .current-grid .cover { margin-inline: auto; }
+body.page-index .archive-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+body.page-index .archive-grid .issue-link { min-width: 0; }
+body.page-index .archive-head { align-items: center; }
+body.page-index .year-filter-wrap { min-width: 0; }
+body.page-index .year-dropdown { min-width: 0; width: 164px; }
+body.page-profile .layout, body.page-subscribe .layout, body.page-profile .nav-back, body.page-subscribe .nav-back { max-width: 720px; width: 100%; }
+body.page-profile .panel, body.page-subscribe .form-panel { min-width: 0; }
+body.page-profile input, body.page-subscribe input { max-width: 100%; }
+body.page-profile .grid, body.page-subscribe .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 900px) {
+  body.page-index .archive-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 18px; }
+  body.page-index .current-grid { gap: clamp(24px, 4vw, 48px); }
+}
+@media (max-width: 700px) {
+  body.page-index .shell, body.page-profile .shell, body.page-subscribe .shell { padding-left: 20px; padding-right: 20px; }
+  body.page-index .current-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  body.page-index .current .cover { width: min(100%, 390px); max-width: 390px; }
+  body.page-index .archive-grid { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  body.page-index .archive-grid .issue-link { width: 100%; max-width: 420px; margin-inline: auto; }
+  body.page-index .issue-label { font-size: 20px; }
+  body.page-index .archive-head { gap: 12px; margin-bottom: 26px; }
+  body.page-index .archive h2 { font-size: clamp(30px, 7vw, 42px); }
+  body.page-index .year-dropdown { width: 150px; }
+  body.page-index .year-trigger { padding: 12px 11px; gap: 8px; }
+  body.page-profile .grid, body.page-subscribe .grid { grid-template-columns: minmax(0, 1fr); }
+  body.page-profile .layout, body.page-subscribe .layout { padding-top: 32px; padding-bottom: 42px; }
+  body.page-profile .nav-back, body.page-subscribe .nav-back { padding-top: 12px; }
+  body.page-profile .panel, body.page-subscribe .form-panel { padding: 22px; }
+  body .site-header .masthead { font-size: clamp(22px, 5.5vw, 32px); }
+  body .site-header .account-actions .subscribe { max-width: 42vw; }
+}
+@media (max-width: 420px) {
+  body.page-index .shell, body.page-profile .shell, body.page-subscribe .shell { padding-left: 16px; padding-right: 16px; }
+  body.page-index .archive-head { align-items: center; }
+  body.page-index .archive h2 { font-size: 31px; }
+  body.page-index .year-dropdown { width: 135px; }
+  body.page-index .year-trigger { font-size: 11px; }
+  body.page-index .current { padding-top: 28px; padding-bottom: 48px; }
+  body.page-index .archive { padding-top: 36px; }
+  body.page-index .issue-heading { font-size: clamp(38px, 12vw, 55px); }
+  body.page-index .read { max-width: 100%; text-align: center; }
+  body .top.site-header { padding-left: 12px; padding-right: 12px; }
+  body .site-header .masthead { font-size: clamp(20px, 5.3vw, 25px); }
+  body .site-header .brand small { font-size: 8px; }
+  body .site-header .account-actions .subscribe { max-width: 43vw; font-size: 10px; padding: 9px 7px; }
+  body.page-profile .panel, body.page-subscribe .form-panel { padding: 18px; }
+  body.page-profile h2, body.page-subscribe h2 { font-size: 27px; }
+}
