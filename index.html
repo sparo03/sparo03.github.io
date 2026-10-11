@@ -8,11 +8,11 @@
 <link href="./style.css" rel="stylesheet"/></head>
 <body class="page-index">
 <div class="shell">
-<header class="top site-header"><a aria-label="Dionysus Magazine home" class="brand" href="./index.html"><div class="masthead">DIONYSUS</div><small>Magazine</small></a><div class="account-actions"><a class="subscribe profile-outline" href="./Subscribe.html" id="account-link">Account</a></div></header>
+<header class="top site-header"><a aria-label="Dionysus Magazine home" class="brand" href="./index.html"><div class="masthead">DIONYSUS</div><small>Magazine</small></a></header>
 <main>
 <section aria-labelledby="current-title" class="current"><div class="state" id="loading">Loading magazines…</div><div class="current-grid hidden" id="current-content"><a aria-label="Read current issue" class="cover" id="current-cover-link" rel="noopener noreferrer" target="_blank"></a><div><div class="eyebrow">Current issue</div><h1 class="issue-heading" id="current-title"></h1><p class="description">One issue every week. Fifty-two editions a year. A growing archive of magazines, each featuring its own collection of stories, visuals, and ideas.</p><a class="read" id="current-read" rel="noopener noreferrer" target="_blank">Read the magazine</a></div></div><p class="state error hidden" id="error"></p><p class="state hidden" id="empty">No published magazines yet. Upload a PDF in Supabase Storage, then add a published row in the magazines table.</p></section>
 <section aria-labelledby="archive-title" class="archive"><div class="archive-head"><h2 id="archive-title">Archive</h2><div class="year-filter-wrap"><div class="year-dropdown" id="year-dropdown"><button aria-controls="year-menu" aria-expanded="false" aria-haspopup="listbox" class="year-trigger" id="year-trigger" type="button"><span id="year-selected">All years</span><span aria-hidden="true" class="year-chevron"></span></button><div aria-label="Filter archive by year" class="year-menu hidden" id="year-menu" role="listbox"></div></div><select aria-label="Archive year" class="visually-hidden" id="year-filter"><option value="all">All years</option></select></div></div><div class="archive-grid" id="archive-grid"></div><p class="state hidden" id="archive-empty">No earlier issues for this year.</p></section>
-</main><footer class="site-footer">© <span id="site-copyright-year"></span> DIONYSUS Magazine</footer>
+</main><footer class="site-footer"><a class="footer-account-link" href="./Subscribe.html" id="account-link">Account</a><div>© <span id="site-copyright-year"></span> DIONYSUS Magazine</div></footer>
 </div>
 <script type="module">
 
@@ -25,17 +25,19 @@ const COVER_BUCKET = 'magazine-covers';
 const $ = id => document.getElementById(id);
 const authDb=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 let canRead=false;
+let signedIn=false;
 let displayedIssues=[];
-function issueHref(issue){return canRead?'#read-magazine':subscribeUrl(issue)}
+function issueHref(issue){return canRead?'#read-magazine':signedIn?'./profile.html':subscribeUrl(issue)}
 function refreshIssueLinks(){
  for(const a of document.querySelectorAll('[data-pdf-path]')){
   const path=a.dataset.pdfPath;
-  a.href=canRead?'#read-magazine':'./Subscribe.html';
+  a.href=canRead?'#read-magazine':signedIn?'./profile.html':'./Subscribe.html';
   a.removeAttribute('target');a.removeAttribute('rel');
  }
 }
 async function updateAccess(session){
  canRead=false;
+ signedIn=!!session?.user;
  if(session?.user){
   const {data,error}=await authDb.from('magazine_subscribers').select('subscription_status').eq('user_id',session.user.id).maybeSingle();
   if(error)console.error('Unable to verify subscription:',error);
@@ -59,7 +61,8 @@ async function openProtectedPdf(path){
  const {data:{session}}=await authDb.auth.getSession();
  if(!session){location.href='./Subscribe.html';return}
  const {data:subscription,error:statusError}=await authDb.from('magazine_subscribers').select('subscription_status').eq('user_id',session.user.id).maybeSingle();
- if(statusError||subscription?.subscription_status!=='active'){location.href='./Subscribe.html';return}
+ if(statusError){alert('Unable to verify your subscription. Please try again.');return}
+ if(subscription?.subscription_status!=='active'){location.href='./profile.html';return}
  const {data,error}=await authDb.storage.from(BUCKET).download(path);
  if(error){alert('Unable to open this magazine: '+error.message);return}
  const url=URL.createObjectURL(new Blob([data],{type:'application/pdf'}));
@@ -70,7 +73,6 @@ async function openProtectedPdf(path){
 document.addEventListener('click',e=>{
  const link=e.target.closest('a[data-pdf-path]');if(!link)return;
  e.preventDefault();
- if(!canRead){location.href='./Subscribe.html';return}
  openProtectedPdf(link.dataset.pdfPath).catch(err=>alert('Unable to open magazine: '+err.message));
 });
 const label = issue => `${issue.issue_week}/52 ${issue.issue_year}`;

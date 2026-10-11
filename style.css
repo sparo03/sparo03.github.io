@@ -365,3 +365,142 @@ body.page-profile .grid, body.page-subscribe .grid { grid-template-columns: repe
   body.page-profile .panel, body.page-subscribe .form-panel { padding: 18px; }
   body.page-profile h2, body.page-subscribe h2 { font-size: 27px; }
 }
+
+/* Larger, truly centered masthead; header scrolls away with the page. */
+body .top.site-header {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  z-index: auto;
+  height: auto;
+  min-height: 104px;
+  padding: 16px 0 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+}
+body .site-header .brand,
+body .site-header.site-header-simple .brand { grid-column: 2; justify-self: center; text-align: center; }
+body .site-header .brand small,
+body .site-header.site-header-simple .brand small { text-align: center; }
+body .site-header .masthead { font-size: clamp(40px, 5.3vw, 72px); }
+body .site-header .brand small { font-size: 13px; margin-top: 8px; }
+body .site-header .account-actions { grid-column: 3; justify-self: end; }
+body .site-header .account-actions .subscribe { max-width: min(25vw, 260px); }
+body.page-index .shell, body.page-profile .shell, body.page-subscribe .shell { padding-top: 26px; }
+@media (max-width: 900px) {
+  body .top.site-header,
+  body .site-header.site-header-simple {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 0;
+  }
+  body .site-header .brand,
+  body .site-header.site-header-simple .brand { grid-column: 1; grid-row: 1; }
+  body .site-header .account-actions { grid-column: 1; grid-row: 2; justify-self: center; }
+  body .site-header .masthead { font-size: clamp(39px, 8vw, 64px); }
+  body .site-header .account-actions .subscribe { max-width: calc(100vw - 40px); }
+}
+@media (max-width: 420px) {
+  body .site-header .masthead { font-size: clamp(36px, 10vw, 43px); }
+  body .site-header .brand small { font-size: 11px; }
+  body .top.site-header { padding: 14px 0 18px; }
+  body .site-header .account-actions .subscribe { max-width: calc(100vw - 32px); }
+}
+
+/* Current issue begins directly below the header at every viewport width. */
+body.page-index .current { padding-top: 0; }
+
+/* Remove spacing between header grid items at every breakpoint. */
+body .top.site-header, body.page-index .top.site-header, body .site-header.site-header-simple { gap: 0; row-gap: 0; column-gap: 0; }
+
+/* Balanced masthead spacing: no extra shell offset above the logo. */
+body.page-index .shell,
+body.page-profile .shell,
+body.page-subscribe .shell { padding-top: 0; }
+body .top.site-header,
+body.page-index .top.site-header,
+body.page-profile .top.site-header,
+body.page-subscribe .top.site-header {
+  min-height: 0;
+  padding-top: 26px;
+  padding-bottom: 26px;
+}
+/* Preserve the equal vertical spacing on narrow screens. */
+@media (max-width: 420px) {
+  body .top.site-header,
+  body.page-index .top.site-header,
+  body.page-profile .top.site-header,
+  body.page-subscribe .top.site-header { padding-top: 26px; padding-bottom: 26px; }
+}
+
+/* Full-width account link when the header wraps to two rows. */
+@media (max-width: 900px) {
+  body.page-index .site-header .account-actions { width: 100%; justify-self: stretch; }
+  body.page-index .site-header .account-actions .subscribe { display: block; width: 100%; max-width: none; text-align: center; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* Space above the full-width Account link when it sits below the logo. */
+@media (max-width: 900px) {
+  body.page-index .site-header .account-actions {
+    padding-top: 18px;
+  }
+}
+
+/* Uniform height for interactive controls across the site. */
+body.page-index, body.page-profile, body.page-subscribe { --control-height: 46px; }
+body.page-index .site-header .account-actions .subscribe,
+body.page-index .year-trigger,
+body.page-index .read,
+body.page-index .archive select,
+body.page-profile input,
+body.page-profile .btn,
+body.page-subscribe input,
+body.page-subscribe .btn,
+body.page-subscribe .auth-switch {
+  box-sizing: border-box;
+  height: var(--control-height);
+  min-height: var(--control-height);
+}
+body.page-index .site-header .account-actions .subscribe,
+body.page-index .year-trigger,
+body.page-index .read,
+body.page-profile .btn,
+body.page-subscribe .btn,
+body.page-subscribe .auth-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.page-index .year-trigger { justify-content: space-between; }
+body.page-index .site-header .account-actions .subscribe,
+body.page-index .read,
+body.page-profile .btn,
+body.page-subscribe .btn,
+body.page-subscribe .auth-switch { padding-top: 0; padding-bottom: 0; }
+@media (max-width: 900px) {
+  body.page-index .site-header .account-actions .subscribe { width: 100%; max-width: none; }
+}
+
+/* Account navigation lives in the homepage footer, not the masthead. */
+body.page-index .site-footer .footer-account-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--control-height, 46px);
+  width: 100%;
+  margin: 0 auto 22px;
+  padding: 0 14px;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  text-decoration: none;
+  font: 11px Arial, Helvetica, sans-serif;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+body.page-index .site-footer .footer-account-link:hover { background: #f7f8fa; }
+body.page-index .site-footer .footer-account-link:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }

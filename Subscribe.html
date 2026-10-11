@@ -10,7 +10,7 @@ function message(s){$('message').textContent=s;$('message').classList.toggle('hi
 function stage(login){$('signupStage').classList.toggle('hidden',login);$('loginStage').classList.toggle('hidden',!login);message('')}
 $('showLogin').onclick=e=>{e.preventDefault();location.hash='login';stage(true)};
 $('showSignup').onclick=e=>{e.preventDefault();location.hash='signup';stage(false)};
-stage(location.hash==='#login');$('year').textContent=new Date().getFullYear();
+stage(location.hash!=='#signup');$('year').textContent=new Date().getFullYear();
 $('signupForm').onsubmit=async e=>{e.preventDefault();if($('password').value!==$('repeat').value){message('Passwords do not match.');return}
  const button=$('signupButton');button.disabled=true;try{
  const {data,error}=await db.auth.signUp({email:$('email').value.trim(),password:$('password').value});if(error)throw error;
