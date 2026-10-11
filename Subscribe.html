@@ -1,42 +1,21 @@
-<!DOCTYPE html>
-
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Subscribe — Dionysus Magazine</title>
-<link href="./style.css" rel="stylesheet"/></head><body class="page-subscribe"><div class="shell"><header class="top site-header site-header-simple"><a aria-label="Dionysus Magazine home" class="brand" href="./index.html"><div class="masthead">DIONYSUS</div><small>Magazine</small></a></header>
-<nav aria-label="Back navigation" class="nav-back"><a class="back" href="./index.html">← Back to magazine</a></nav>
-<main class="layout"><section class="intro"><div class="eyebrow">Dionysus Magazine</div><h1>Join the<br/>readers.</h1><p>Sign up for Dionysus Magazine. Enter your email address and where you'd like your magazine delivered.</p><p class="issue hidden" id="issueNote"></p></section>
-<section class="form-panel"><div id="formStage"><h2>Create an account</h2><p class="hint">Already have an account? <a href="#login" id="showLogin">Log in</a></p><form id="detailsForm"><div class="field"><label for="email">Email address</label><input autocomplete="email" id="email" maxlength="254" required="" type="email"/></div><div class="field"><label for="password">Password</label><input autocomplete="new-password" id="password" minlength="8" required="" type="password"/></div><div class="field"><label for="repeatPassword">Repeat password</label><input autocomplete="new-password" id="repeatPassword" minlength="8" required="" type="password"/></div><h2 class="shipping-heading">Shipping address</h2><div class="grid"><div class="field"><label for="first">First name</label><input autocomplete="given-name" id="first" maxlength="100" required=""/></div><div class="field"><label for="last">Last name</label><input autocomplete="family-name" id="last" maxlength="100" required=""/></div></div><div class="field"><label for="address">Street address</label><input autocomplete="street-address" id="address" maxlength="250" required=""/></div><div class="grid"><div class="field"><label for="postal">Postal code</label><input autocomplete="postal-code" id="postal" maxlength="30" required=""/></div><div class="field"><label for="city">City</label><input autocomplete="address-level2" id="city" maxlength="120" required=""/></div></div><div class="field"><label for="country">Country</label><input autocomplete="country-name" id="country" maxlength="100" required=""/></div><button class="btn" id="send" type="submit">Subscribe</button></form><p class="fine"></p></div><div class="hidden" id="loginStage"><h2>Log in</h2><p class="hint">New to Dionysus? <a href="#signup" id="showSignup">Create an account</a></p><form id="loginForm"><div class="field"><label for="loginEmail">Email address</label><input autocomplete="username" id="loginEmail" required="" type="email"/></div><div class="field"><label for="loginPassword">Password</label><input autocomplete="current-password" id="loginPassword" required="" type="password"/></div><button class="btn" id="loginButton" type="submit">Log in</button></form></div>
-<div aria-live="polite" class="message hidden" id="message" role="status"></div></section></main><footer class="site-footer">© <span id="site-copyright-year"></span> DIONYSUS Magazine</footer></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Create account — Dionysus Magazine</title><link rel="stylesheet" href="./style.css"></head>
+<body class="page-subscribe"><div class="shell"><header class="top site-header site-header-simple"><a class="brand" href="./index.html"><div class="masthead">DIONYSUS</div><small>Magazine</small></a></header><nav class="nav-back"><a class="back" href="./index.html">← Back to magazine</a></nav><main class="layout"><section class="intro"><div class="eyebrow">Dionysus Magazine</div><h1>Join the<br>readers.</h1><p>Create your free account first. Subscription is optional and can be started from your profile.</p></section><section class="form-panel"><div id="signupStage"><h2>Create an account</h2><p class="hint">Already registered? <a href="#login" id="showLogin">Log in</a></p><form id="signupForm"><div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" required></div><div class="field"><label for="password">Password</label><input id="password" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label for="repeat">Repeat password</label><input id="repeat" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn" id="signupButton">Create free account</button></form></div><div id="loginStage" class="hidden"><h2>Log in</h2><p class="hint"><a href="#signup" id="showSignup">Create an account</a></p><form id="loginForm"><div class="field"><label for="loginEmail">Email address</label><input id="loginEmail" type="email" autocomplete="username" required></div><div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required></div><button class="btn" id="loginButton">Log in</button></form></div><div class="message hidden" id="message" role="status" aria-live="polite"></div></section></main><footer class="site-footer">© <span id="year"></span> DIONYSUS Magazine</footer></div>
 <script type="module">
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
 const db=createClient('https://imwqgvigesticlhsakfx.supabase.co','sb_publishable_GEjJpD7saLKkIDj7LmeCiQ_CbvduMlo');
 const $=id=>document.getElementById(id);
-const issue=new URLSearchParams(location.search).get('issue');if(issue){$('issueNote').textContent=`Selected issue: ${issue}`;$('issueNote').classList.remove('hidden')}
-function msg(value,type=''){const el=$('message');el.textContent=value;el.className=`message ${type}`;el.classList.toggle('hidden',!value)}
-function showStage(login){$('formStage').classList.toggle('hidden',login);$('loginStage').classList.toggle('hidden',!login);msg('')}
-$('showLogin').addEventListener('click',e=>{e.preventDefault();showStage(true)});
-$('showSignup').addEventListener('click',e=>{e.preventDefault();showStage(false)});
-if(location.hash==='#login')showStage(true);
-$('detailsForm').addEventListener('submit',async e=>{
- e.preventDefault();const button=$('send');const password=$('password').value;
- if(password!==$('repeatPassword').value){msg('Passwords do not match.','error');return}
- if(password.length<8){msg('Use a password of at least 8 characters.','error');return}
- button.disabled=true;msg('Creating your account…');
- const email=$('email').value.trim();
- const payload={email,first_name:$('first').value.trim(),last_name:$('last').value.trim(),street_address:$('address').value.trim(),postal_code:$('postal').value.trim(),city:$('city').value.trim(),country:$('country').value.trim()};
- try{
-  const {data,error:authError}=await db.auth.signUp({email,password});
-  if(authError)throw authError;
-  if(!data.session||!data.user)throw new Error('Account created, but sign-in is pending. Disable Confirm email in Supabase Auth settings for immediate access, then log in.');
-  const {error}=await db.from('magazine_subscribers').upsert({...payload,user_id:data.user.id},{onConflict:'user_id'});
-  if(error)throw new Error('Account created, but shipping details could not be saved: '+error.message);
-  window.location.replace('./index.html');
- }catch(err){msg(err.message||String(err),'error')}
- finally{button.disabled=false}
-});
-$('loginForm').addEventListener('submit',async e=>{
- e.preventDefault();const button=$('loginButton');button.disabled=true;msg('Signing in…');
- try{const {error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});if(error)throw error;window.location.replace('./index.html')}
- catch(err){msg(err.message||String(err),'error')}
- finally{button.disabled=false}
-});
-</script><script>document.getElementById("site-copyright-year").textContent = new Date().getFullYear();</script></body></html>
+function message(s){$('message').textContent=s;$('message').classList.toggle('hidden',!s)}
+function stage(login){$('signupStage').classList.toggle('hidden',login);$('loginStage').classList.toggle('hidden',!login);message('')}
+$('showLogin').onclick=e=>{e.preventDefault();location.hash='login';stage(true)};
+$('showSignup').onclick=e=>{e.preventDefault();location.hash='signup';stage(false)};
+stage(location.hash==='#login');$('year').textContent=new Date().getFullYear();
+$('signupForm').onsubmit=async e=>{e.preventDefault();if($('password').value!==$('repeat').value){message('Passwords do not match.');return}
+ const button=$('signupButton');button.disabled=true;try{
+ const {data,error}=await db.auth.signUp({email:$('email').value.trim(),password:$('password').value});if(error)throw error;
+ if(data.session){location.replace('./profile.html');return}
+ message('Account registration received. Check your email to confirm your address, then log in.');
+ }catch(err){message(err.message)}finally{button.disabled=false}};
+$('loginForm').onsubmit=async e=>{e.preventDefault();const button=$('loginButton');button.disabled=true;try{
+ const {error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});if(error)throw error;location.replace('./profile.html');
+ }catch(err){message(err.message)}finally{button.disabled=false}};
+</script></body></html>
