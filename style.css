@@ -180,3 +180,58 @@ body .site-header.site-header-simple .brand small{text-align:center}
 .page-subscribe .stripe-subscription h2{margin-bottom:10px}
 
 .page-subscribe .stripe-checkout{text-align:center;margin-top:12px}
+
+/* Profile overview panel refinements (moved from profile.html) */
+/* Consistent with the Password and Shipping address panels. */
+body.page-profile .layout { gap: 20px; }
+body.page-profile .layout > section.panel,
+body.page-profile .layout > section:first-child.panel {
+  border: 1px solid var(--line);
+  padding: clamp(20px, 3vw, 35px);
+  margin: 0;
+  background: #fff;
+  text-align: left;
+}
+body.page-profile .layout > section.panel h2 {
+  font: normal 29px Georgia, serif;
+  margin: 0 0 20px;
+  text-align: left;
+}
+body.page-profile .layout > section.panel .member-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: left;
+}
+body.page-profile .layout > section.panel .member-details > div {
+  padding: 0;
+  margin: 0 0 17px;
+  border: 0;
+  text-align: left;
+}
+body.page-profile .layout > section.panel .member-detail-label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 8px;
+  text-align: left;
+}
+body.page-profile .layout > section.panel .member-detail-value {
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+body.page-profile #shippingAddressDisplay { white-space: pre-line; }
+body.page-profile #membershipOverview .actions { margin: 0; }
+body.page-profile #accountOverview #signout { margin-top: 0; }
+body.page-profile .layout > #content > .panel { margin-bottom: 20px; }
+body.page-profile .layout > #content > .panel:last-child { margin-bottom: 0; }
