@@ -235,3 +235,38 @@ body.page-profile #membershipOverview .actions { margin: 0; }
 body.page-profile #accountOverview #signout { margin-top: 0; }
 body.page-profile .layout > #content > .panel { margin-bottom: 20px; }
 body.page-profile .layout > #content > .panel:last-child { margin-bottom: 0; }
+
+/* Account access: same centered width as profile panels */
+body.page-subscribe .layout{display:flex;flex-direction:column;max-width:720px;width:100%;margin:0 auto;padding:42px 0 60px;gap:0}
+body.page-subscribe .form-panel{width:100%;padding:clamp(20px,3vw,35px)}
+@media(max-width:740px){body.page-subscribe .layout{padding:40px 0}}
+
+/* Back navigation removed from profile and account access pages. */
+
+/* No separator lines on site headers and footers across all pages. */
+body.page-index .top.site-header,
+body.page-profile .top.site-header,
+body.page-subscribe .top.site-header { border-bottom: none; }
+body.page-index footer,
+body.page-profile footer,
+body.page-subscribe footer,
+body .site-footer { border-top: none; }
+
+/* Profile overview values match the Shipping address form input text. */
+body.page-profile .layout > section.panel .member-detail-value {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+/* Center the copyright text in every page footer. */
+body .site-footer,
+body.page-index footer,
+body.page-profile footer,
+body.page-subscribe footer {
+  text-align: center;
+}
+
+/* Align back navigation with centered 720px content panels. */
+body.page-profile .nav-back,
+body.page-subscribe .nav-back {max-width:720px;width:100%;margin:0 auto;padding-top:20px;}
