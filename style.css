@@ -842,3 +842,17 @@ body.page-index .current-issue-label {
   margin: 18px 0 0;
   text-align: left;
 }
+
+/* Match the magazine subtitle typography in dionysus-admin. */
+body .site-header .brand small,
+body .site-header.site-header-simple .brand small {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 2px;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #687589;
+  margin-top: 6px;
+}
