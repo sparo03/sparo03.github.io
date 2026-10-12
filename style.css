@@ -790,3 +790,41 @@ body.page-subscribe .top.site-header::after {
   border-bottom: 1px solid #dbe0e5;
   pointer-events: none;
 }
+
+
+/* Current issue: large archive-style cover, centered with its issue label below. */
+body.page-index .current-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body.page-index .current-issue {
+  width: min(100%, 470px);
+  margin-inline: auto;
+  text-align: center;
+}
+body.page-index .current-issue .cover,
+body.page-index .current .cover {
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin-inline: auto;
+}
+body.page-index .current-issue-label {
+  font: normal clamp(22px, 2.5vw, 32px) Georgia, serif;
+  margin: 18px 0 0;
+  text-align: center;
+}
+
+/* Smaller Dionysus Magazine masthead on all pages. */
+body .site-header .masthead {
+  font-size: clamp(30px, 4vw, 50px);
+}
+body .site-header .brand small {
+  font-size: 11px;
+  margin-top: 6px;
+}
+@media (max-width: 700px) {
+  body .site-header .masthead { font-size: clamp(25px, 6vw, 36px); }
+  body .site-header .brand small { font-size: 10px; }
+}
