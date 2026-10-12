@@ -6,8 +6,9 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Dionysus Magazine</title>
 <link href="./style.css" rel="stylesheet"/>
-<link rel="icon" href="./favicon.ico" type="image/x-icon" sizes="any"/>
-<link rel="icon" href="./inkonwhite.png" type="image/png"/>
+<link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon"/>
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png"/>
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png"/>
 </head>
 <body class="page-index">
 <div class="shell">
@@ -61,23 +62,31 @@ authDb.auth.onAuthStateChange((_event,session)=>{void showAccount(session);setTi
 
 
 // PDF bucket is PRIVATE. Download requires Supabase Storage RLS authorization.
-async function openProtectedPdf(path){
- const {data:{session}}=await authDb.auth.getSession();
- if(!session){location.href='./Subscribe.html';return}
- const {data:subscription,error:statusError}=await authDb.from('magazine_subscribers').select('subscription_status').eq('user_id',session.user.id).maybeSingle();
- if(statusError){alert('Unable to verify your subscription. Please try again.');return}
- if(subscription?.subscription_status!=='active'){location.href='./profile.html';return}
- const {data,error}=await authDb.storage.from(BUCKET).download(path);
- if(error){alert('Unable to open this magazine: '+error.message);return}
- const url=URL.createObjectURL(new Blob([data],{type:'application/pdf'}));
- const viewer=window.open(url,'_blank');
- if(!viewer){const link=document.createElement('a');link.href=url;link.download=path.split('/').pop()||'magazine.pdf';document.body.append(link);link.click();link.remove()}
- setTimeout(()=>URL.revokeObjectURL(url),300000);
+async function downloadProtectedPdf(path){
+ try{
+  const {data:{session}}=await authDb.auth.getSession();
+  if(!session){location.href='./Subscribe.html';return}
+  const {data:subscription,error:statusError}=await authDb.from('magazine_subscribers').select('subscription_status').eq('user_id',session.user.id).maybeSingle();
+  if(statusError)throw new Error('Unable to verify your subscription. Please try again.');
+  if(subscription?.subscription_status!=='active'){location.href='./profile.html';return}
+  const {data,error}=await authDb.storage.from(BUCKET).download(path);
+  if(error)throw new Error('Unable to download this magazine: '+error.message);
+  const filename=path.split('/').pop()||'magazine.pdf';
+  const url=URL.createObjectURL(new Blob([data],{type:'application/pdf'}));
+  const link=document.createElement('a');
+  link.href=url;
+  link.download=filename;
+  link.style.display='none';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+ }catch(err){alert(err.message||String(err));}
 }
 document.addEventListener('click',e=>{
  const link=e.target.closest('a[data-pdf-path]');if(!link)return;
  e.preventDefault();
- openProtectedPdf(link.dataset.pdfPath).catch(err=>alert('Unable to open magazine: '+err.message));
+ void downloadProtectedPdf(link.dataset.pdfPath);
 });
 const label = issue => `${issue.issue_week}/52 ${issue.issue_year}`;
 const subscribeUrl = issue => `./Subscribe.html?issue=${encodeURIComponent(label(issue))}`;
