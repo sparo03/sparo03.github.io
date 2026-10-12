@@ -753,3 +753,40 @@ body.page-index .current-grid .current-copy .read {
   max-width: none;
   margin: 0;
 }
+
+
+/* Full-viewport dividers on the homepage, without changing content alignment. */
+body.page-index .top.site-header,
+body.page-index .current {
+  border-bottom: 0;
+  position: relative;
+}
+body.page-index .top.site-header::after,
+body.page-index .current::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  border-bottom: 1px solid #dbe0e5;
+  pointer-events: none;
+}
+
+/* Full-viewport header dividers on Profile and Subscribe pages. */
+body.page-profile .top.site-header,
+body.page-subscribe .top.site-header {
+  border-bottom: 0;
+  position: relative;
+}
+body.page-profile .top.site-header::after,
+body.page-subscribe .top.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  border-bottom: 1px solid #dbe0e5;
+  pointer-events: none;
+}
