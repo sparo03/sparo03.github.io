@@ -664,3 +664,35 @@ body.page-index .site-header .account-actions .subscribe {
 @media (max-width: 540px) {
   body.page-index .site-header .account-actions { width: 100%; max-width: 100%; }
 }
+
+/* Header bottom divider — all pages */
+body.page-index .top.site-header,
+body.page-profile .top.site-header,
+body.page-subscribe .top.site-header {
+  border-bottom: 1px solid #dbe0e5;
+}
+
+/* Breathing room between the header divider and page content. */
+body.page-index .top.site-header,
+body.page-profile .top.site-header,
+body.page-subscribe .top.site-header {
+  margin-bottom: 28px;
+}
+
+/* Consistent outer width for every page and its header. */
+body.page-index .shell,
+body.page-profile .shell,
+body.page-subscribe .shell {
+  max-width: 1150px;
+  width: 100%;
+  margin-inline: auto;
+}
+body.page-index .top.site-header,
+body.page-profile .top.site-header,
+body.page-subscribe .top.site-header {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
+}
