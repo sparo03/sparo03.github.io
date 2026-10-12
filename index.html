@@ -77,8 +77,9 @@ async function updateAccess(session){
 }
 async function showAccount(session){
  const link=$('account-link');if(!link)return;
- link.textContent='Membership';
-  link.setAttribute('aria-label','Membership');
+ const email=session?.user?.email;
+ link.textContent=email || 'Membership';
+ link.setAttribute('aria-label',email ? `Account: ${email}` : 'Membership');
  link.href=session?.user?'./profile.html':'./Subscribe.html';
  link.title=session?.user?'Open your profile':'Log in or subscribe';
  link.classList.add('profile-outline');
