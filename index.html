@@ -9,6 +9,32 @@
 <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon"/>
 <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png"/>
 <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png"/>
+<style>
+/* Cover thumbnails: remove borders, shadows and inline-image baseline gaps. */
+.page-index .cover, .page-index .current-issue .cover,
+.page-index .issue-link .cover {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  line-height: 0 !important;
+  overflow: hidden !important;
+}
+.page-index .cover img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  vertical-align: top !important;
+}
+.page-index .cover::before, .page-index .cover::after {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+</style>
 </head>
 <body class="page-index">
 <div class="shell">
@@ -88,8 +114,9 @@ document.addEventListener('click',e=>{
  e.preventDefault();
  void downloadProtectedPdf(link.dataset.pdfPath);
 });
-const label = issue => `${issue.issue_week}/52 ${issue.issue_year}`;
-const subscribeUrl = issue => `./Subscribe.html?issue=${encodeURIComponent(label(issue))}`;
+const issueIdentifier = issue => String(issue.publication_date || issue.issue_year || "Magazine");
+const label = issue => String(issue.title ?? "").trim() || issueIdentifier(issue);
+const subscribeUrl = issue => `./Subscribe.html?issue=${encodeURIComponent(issueIdentifier(issue))}`;
 // PNG cover stored alongside each PDF by Dionysus Admin.
 const coverUrl = path => `${SUPABASE_URL}/storage/v1/object/public/${COVER_BUCKET}/${String(path.replace(/\.pdf$/i,'.png')).split('/').map(encodeURIComponent).join('/')}`;
 function renderCover(container,path,eager=false){
@@ -109,13 +136,13 @@ function renderArchive(issues){
 }
 async function loadMagazines(){
  try{
-  const endpoint=`${SUPABASE_URL}/rest/v1/magazines?select=issue_year,issue_week,publication_date,pdf_path,title&published=eq.true&order=issue_year.desc,issue_week.desc`;
+  const endpoint=`${SUPABASE_URL}/rest/v1/magazines?select=issue_year,publication_date,pdf_path,title&published=eq.true&order=created_at.desc.nullslast,publication_date.desc,issue_year.desc`;
   const response=await fetch(endpoint,{headers:{apikey:SUPABASE_PUBLISHABLE_KEY}});
   if(!response.ok){const detail=await response.text();throw new Error(`Supabase returned ${response.status}: ${detail.slice(0,300)}`)}
   const issues=await response.json();$('loading').classList.add('hidden');
   if(!issues.length){$('empty').classList.remove('hidden');$('archive-empty').classList.remove('hidden');return}
   const [current,...older]=issues;
-  $('current-title').textContent=`${current.issue_week}/12 ${current.issue_year}`;
+  $('current-title').textContent=label(current);
   $('current-cover-link').href=issueHref(current);$('current-cover-link').dataset.pdfPath=current.pdf_path;
    renderCover($('current-cover-link'), current.pdf_path, true);
   $('current-content').classList.remove('hidden');
