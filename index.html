@@ -11,11 +11,11 @@
 </head>
 <body class="page-index">
 <div class="shell">
-<header class="top site-header"><a aria-label="Dionysus Magazine home" class="brand" href="./index.html"><div class="masthead">DIONYSUS</div><small>Magazine</small></a></header>
+<header class="top site-header"><a aria-label="Dionysus Magazine home" class="brand" href="./index.html"><div class="masthead">DIONYSUS</div><small>Magazine</small></a><div class="account-actions"><a class="subscribe profile-outline" href="./Subscribe.html" id="account-link">Account</a></div></header>
 <main>
-<section aria-labelledby="current-title" class="current"><div class="state" id="loading">Loading magazines…</div><div class="current-grid hidden" id="current-content"><a aria-label="Read current issue" class="cover" id="current-cover-link" rel="noopener noreferrer" target="_blank"></a><div><div class="eyebrow">Current issue</div><h1 class="issue-heading" id="current-title"></h1><p class="description">One issue every week. Fifty-two editions a year. A growing archive of magazines, each featuring its own collection of stories, visuals, and ideas.</p><a class="read" id="current-read" rel="noopener noreferrer" target="_blank">Read the magazine</a></div></div><p class="state error hidden" id="error"></p><p class="state hidden" id="empty">No published magazines yet. Upload a PDF in Supabase Storage, then add a published row in the magazines table.</p></section>
+<section aria-labelledby="current-title" class="current"><div class="state" id="loading">Loading magazines…</div><div class="current-grid hidden" id="current-content"><a aria-label="Read current issue" class="cover" id="current-cover-link" rel="noopener noreferrer" target="_blank"></a><div class="current-copy"><div class="eyebrow">Current issue</div><h1 class="issue-heading" id="current-title"></h1><p class="description">One issue every week. Fifty-two editions a year. A growing archive of magazines, each featuring its own collection of stories, visuals, and ideas.</p><a class="read" id="current-read" rel="noopener noreferrer" target="_blank">Read the magazine</a></div></div><p class="state error hidden" id="error"></p><p class="state hidden" id="empty">No published magazines yet. Upload a PDF in Supabase Storage, then add a published row in the magazines table.</p></section>
 <section aria-labelledby="archive-title" class="archive"><div class="archive-head"><h2 id="archive-title">Archive</h2><div class="year-filter-wrap"><div class="year-dropdown" id="year-dropdown"><button aria-controls="year-menu" aria-expanded="false" aria-haspopup="listbox" class="year-trigger" id="year-trigger" type="button"><span id="year-selected">All years</span><span aria-hidden="true" class="year-chevron"></span></button><div aria-label="Filter archive by year" class="year-menu hidden" id="year-menu" role="listbox"></div></div><select aria-label="Archive year" class="visually-hidden" id="year-filter"><option value="all">All years</option></select></div></div><div class="archive-grid" id="archive-grid"></div><p class="state hidden" id="archive-empty">No earlier issues for this year.</p></section>
-</main><footer class="site-footer"><a class="footer-account-link" href="./Subscribe.html" id="account-link">Account</a><div>© <span id="site-copyright-year"></span> DIONYSUS Magazine</div></footer>
+</main><footer class="site-footer"><div>© <span id="site-copyright-year"></span> DIONYSUS Magazine</div></footer>
 </div>
 <script type="module">
 
@@ -51,6 +51,7 @@ async function updateAccess(session){
 async function showAccount(session){
  const link=$('account-link');if(!link)return;
  link.textContent=session?.user?(session.user.email||'Profile'):'Account';
+  link.setAttribute('aria-label',session?.user?`Account: ${session.user.email||'Profile'}`:'Account');
  link.href=session?.user?'./profile.html':'./Subscribe.html';
  link.title=session?.user?'Open your profile':'Log in or subscribe';
  link.classList.add('profile-outline');

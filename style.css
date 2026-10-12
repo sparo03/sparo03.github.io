@@ -504,3 +504,163 @@ body.page-index .site-footer .footer-account-link {
 }
 body.page-index .site-footer .footer-account-link:hover { background: #f7f8fa; }
 body.page-index .site-footer .footer-account-link:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* Homepage: left-aligned masthead, account button at top right. */
+body.page-index .top.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+body.page-index .site-header .brand {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+  justify-self: auto;
+  text-align: left;
+}
+body.page-index .site-header .brand small { text-align: left; }
+body.page-index .site-header .account-actions {
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 0;
+  padding-top: 0;
+  margin-left: auto;
+  justify-self: auto;
+}
+body.page-index .site-header .account-actions .subscribe {
+  width: auto;
+  max-width: min(40vw, 300px);
+  min-height: 46px;
+  padding: 0 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Current issue: editorial copy on left, magazine cover on right. */
+body.page-index .current-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, .95fr);
+}
+body.page-index .current-grid .current-copy { min-width: 0; }
+body.page-index .current-grid .cover { justify-self: end; margin-left: auto; margin-right: 0; }
+@media (max-width: 700px) {
+  body.page-index .top.site-header { flex-direction: row; gap: 10px; }
+  body.page-index .site-header .masthead { font-size: clamp(25px, 6.6vw, 45px); }
+  body.page-index .site-header .brand small { font-size: 10px; }
+  body.page-index .site-header .account-actions .subscribe {
+    max-width: 36vw;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+  body.page-index .current-grid { grid-template-columns: minmax(0, 1fr); }
+  body.page-index .current-grid .cover { justify-self: center; margin-inline: auto; }
+}
+@media (max-width: 420px) {
+  body.page-index .site-header .masthead { font-size: clamp(23px, 6.3vw, 29px); }
+  body.page-index .site-header .account-actions .subscribe { max-width: 35vw; padding: 0 8px; }
+}
+
+/* Homepage masthead centered independently of the right-side Account link. */
+body.page-index .top.site-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0;
+}
+body.page-index .site-header .brand {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  text-align: center;
+}
+body.page-index .site-header .brand small { text-align: center; }
+body.page-index .site-header .account-actions {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  margin-left: 0;
+}
+/* Current issue cover on the left and editorial copy on the right. */
+body.page-index .current-grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1fr); }
+body.page-index .current-grid .cover { justify-self: start; margin-left: 0; margin-right: auto; }
+@media (max-width: 700px) {
+  body.page-index .current-grid { grid-template-columns: minmax(0, 1fr); }
+  body.page-index .current-grid .cover { justify-self: center; margin-inline: auto; }
+}
+@media (max-width: 540px) {
+  body.page-index .top.site-header { grid-template-columns: minmax(0, 1fr); }
+  body.page-index .site-header .brand { grid-column: 1; grid-row: 1; }
+  body.page-index .site-header .account-actions { grid-column: 1; grid-row: 2; justify-self: end; margin-top: 12px; }
+}
+
+/* Homepage header: match the editorial grid, with a little extra breathing room. */
+body.page-index .top.site-header {
+  margin-inline: -12px;
+  padding-inline: 12px;
+  grid-template-columns: minmax(0,1fr) minmax(0,auto) minmax(0,1fr);
+  column-gap: 12px;
+}
+body.page-index .site-header .account-actions {
+  width: min(100%, 280px);
+  min-width: 0;
+  justify-self: end;
+}
+body.page-index .site-header .account-actions .subscribe {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 46px;
+  line-height: 44px;
+  padding: 0 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+@media (max-width: 700px) {
+  body.page-index .top.site-header { margin-inline: 0; padding-inline: 0; }
+  body.page-index .site-header .account-actions .subscribe { font-size: 12px; }
+}
+@media (max-width: 540px) {
+  body.page-index .top.site-header { grid-template-columns: minmax(0,1fr); }
+  body.page-index .site-header .brand { grid-column: 1; grid-row: 1; }
+  body.page-index .site-header .account-actions {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: stretch;
+    width: 100%;
+    max-width: none;
+    margin-top: 18px;
+  }
+  body.page-index .site-header .account-actions .subscribe {
+    width: 100%;
+    max-width: none;
+    font-size: 12px;
+  }
+}
+
+/* Reserve more space on both sides of the centered masthead so long
+   account emails truncate earlier instead of crowding the logo. */
+@media (min-width: 541px) {
+  body.page-index .top.site-header {
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr);
+    column-gap: 32px;
+  }
+  body.page-index .site-header .brand {
+    margin-inline: 24px;
+  }
+  body.page-index .site-header .account-actions {
+    max-width: 280px;
+    min-width: 0;
+  }
+}
+
+/* Account action: compact beside masthead; full-width once header stacks. */
+@media (min-width: 541px) {
+  body.page-index .site-header .account-actions { width: min(100%, 180px); max-width: 180px; }
+}
+@media (max-width: 540px) {
+  body.page-index .site-header .account-actions { width: 100%; max-width: 100%; }
+}
